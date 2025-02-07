@@ -99,6 +99,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.1",
+    "akuse-beta": "file:",
     "axios": "^1.6.8",
     "cheerio": "^1.0.0",
     "dompurify": "^3.1.2",
@@ -117,6 +118,7 @@
     "react-loading-skeleton": "^3.4.0",
     "react-player": "^2.16.0",
     "react-router-dom": "^6.16.0",
+    "sofamaxxing": "github:aleganza/sofamaxxing",
     "stream": "^0.0.2"
   },
   "devDependencies": {

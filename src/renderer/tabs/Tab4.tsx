@@ -19,8 +19,8 @@ interface Option {
 export const LANGUAGE_OPTIONS: Option[] = [
   { value: 'HIANIME', label: '🌍 HiAnime' }, // zoro from consumet
   { value: 'GOGOANIME', label: '🇺🇸 Gogoanime ' },
+  { value: 'ANIMEHEAVEN', label: '🇺🇸 AnimeHeaven ' },
   { value: 'ANIMEUNITY', label: '🇮🇹 AnimeUnity' },
-  // { value: 'ANIX', label: '🇺🇸 Anix' }, needs working proxy
 ];
 
 const Element: React.FC<{

@@ -1,16 +1,18 @@
-import { ISource, IVideo } from '@consumet/extensions';
-import { SOFAMAXXING_URL } from '../../constants/utils';
-import { getCacheId } from '../utils';
-import { apiRequest } from './api';
+import { UnifiedMediaResult, UnifiedSources } from 'sofamaxxing/dist/models/unifiedTypes';
+import Gogoanime from 'sofamaxxing/dist/providers/Gogoanime';
+
 import ProviderCache from './cache';
 
-const api = `${SOFAMAXXING_URL}/gogoanime`;
+const api = new Gogoanime();
 const cache = new ProviderCache();
 
 class GogoanimeApi {
-  searchInProvider = async (query: string, dubbed: boolean) => {
-    const searchResults = await apiRequest(
-      `${api}/${dubbed ? `${query} (Dub)` : query}`,
+  searchInProvider = async (
+    query: string,
+    dubbed: boolean,
+  ): Promise<UnifiedMediaResult[] | null> => {
+    const searchResults = await api.search(
+      `${dubbed ? `${query} (Dub)` : query}`,
     );
 
     return searchResults.results.filter((result: any) =>
@@ -27,27 +29,16 @@ class GogoanimeApi {
   searchMatchInProvider = async (
     animeTitles: string[],
     index: number,
-    episode: number,
     dubbed: boolean,
     releaseDate: number,
-  ) => {
-    console.log(
-      `%c Episode ${episode}, looking for Anix match...`,
-      `color: #ffc119`,
-    );
-
+  ): Promise<UnifiedMediaResult | null> => {
     // start searching
     for (const animeSearch of animeTitles) {
-      // first, check cache
-      const cacheId = getCacheId(animeSearch, episode, dubbed);
-      if (cache.search[cacheId] !== undefined) return cache.search[cacheId];
-      if (cache.animeIds[animeSearch] !== undefined)
-        return cache.animeIds[animeSearch];
-
       // search anime (per dub too)
-      const searchResults = await apiRequest(
-        `${api}/${dubbed ? `${animeSearch} (Dub)` : animeSearch}`,
+      const searchResults = await api.search(
+        `${dubbed ? `${animeSearch} (Dub)` : animeSearch}`,
       );
+
       const filteredResults = searchResults.results.filter((result: any) =>
         dubbed
           ? (result.title as string).includes('(Dub)')
@@ -57,13 +48,13 @@ class GogoanimeApi {
       // find the best result: first check for same name,
       // then check for same release date.
       // finally, update cache
-      const animeResult = (cache.animeIds[animeSearch] =
+      const animeResult =
         filteredResults.filter(
           (result: any) =>
             result.title.toLowerCase().trim() ==
               animeSearch.toLowerCase().trim() ||
             result.releaseDate == releaseDate.toString(),
-        )[index] ?? null);
+        )[index] ?? null;
 
       if (animeResult) return animeResult;
     }
@@ -71,24 +62,18 @@ class GogoanimeApi {
     return null;
   };
 
-  getEpisodeSource = async (animeId: string, episode: number) => {
-    // first, check cache
-    // if(cache.episodes[animeId] !== undefined) {
-    //   const found = cache.episodes[animeId]?.find((ep) => ep.number == episode)
-    //   if(found)
-    //     return found.id;
-    // }
-
-    const animeInfo = await apiRequest(`${api}/info/${animeId}`);
+  getEpisodeSource = async (
+    animeId: string,
+    episode: number,
+  ): Promise<UnifiedSources | null> => {
+    const mediaInfo = await api.fetchInfo(animeId);
 
     const episodeId =
-      (cache.episodes[animeId] = animeInfo?.episodes)?.find(
-        (ep: any) => ep.number == episode,
-      )?.id ?? null;
+      mediaInfo?.episodes?.find((ep: any) => ep.number == episode)?.id ?? null;
 
     if (episodeId) {
-      const video = await apiRequest(`${api}/episode/${episodeId}`);
-      return video as ISource;
+      const sources = await api.fetchSources(episodeId);
+      return sources as UnifiedSources;
     }
 
     // episode not found

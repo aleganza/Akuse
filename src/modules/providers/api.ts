@@ -1,16 +1,15 @@
 import 'dotenv/config';
 
-import { IVideo } from '@consumet/extensions';
-import axios from 'axios';
 import Store from 'electron-store';
 
 import { ListAnimeData } from '../../types/anilistAPITypes';
 import { animeCustomTitles } from '../animeCustomTitles';
 import { getParsedAnimeTitles } from '../utils';
+import AnimeHeavenAPI from './animeheaven';
 import AnimeUnityApi from './animeunity';
-import AnixApi from './anix';
 import GogoanimeApi from './gogoanime';
 import HiAnimeAPI from './hianime';
+import axios from 'axios';
 
 const STORE = new Store();
 
@@ -23,12 +22,12 @@ export const searchInProvider = async (query: string) => {
       const api = new HiAnimeAPI();
       return await api.searchInProvider(query, dubbed);
     }
-    case 'ANIX': {
-      const api = new AnixApi();
-      return await api.searchInProvider(query, dubbed);
-    }
     case 'GOGOANIME': {
       const api = new GogoanimeApi();
+      return await api.searchInProvider(query, dubbed);
+    }
+    case 'ANIMEHEAVEN': {
+      const api = new AnimeHeavenAPI();
       return await api.searchInProvider(query, dubbed);
     }
     case 'ANIMEUNITY': {
@@ -62,17 +61,6 @@ export const searchAutomaticMatchInProvider = async (
       return await api.searchMatchInProvider(
         animeTitles,
         customTitle ? customTitle.index : 0,
-        episode,
-        dubbed,
-        listAnimeData.media.startDate?.year ?? 0,
-      );
-    }
-    case 'ANIX': {
-      const api = new AnixApi();
-      return await api.searchMatchInProvider(
-        animeTitles,
-        customTitle ? customTitle.index : 0,
-        episode,
         dubbed,
         listAnimeData.media.startDate?.year ?? 0,
       );
@@ -82,7 +70,15 @@ export const searchAutomaticMatchInProvider = async (
       return await api.searchMatchInProvider(
         animeTitles,
         customTitle ? customTitle.index : 0,
-        episode,
+        dubbed,
+        listAnimeData.media.startDate?.year ?? 0,
+      );
+    }
+    case 'ANIMEHEAVEN': {
+      const api = new AnimeHeavenAPI();
+      return await api.searchMatchInProvider(
+        animeTitles,
+        customTitle ? customTitle.index : 0,
         dubbed,
         listAnimeData.media.startDate?.year ?? 0,
       );
@@ -92,7 +88,6 @@ export const searchAutomaticMatchInProvider = async (
       return await api.searchMatchInProvider(
         animeTitles,
         customTitle ? customTitle.index : 0,
-        episode,
         dubbed,
         listAnimeData.media.startDate?.year ?? 0,
       );
@@ -116,14 +111,14 @@ export const getSourceFromProvider = async (
 
       return source;
     }
-    case 'ANIX': {
-      const api = new AnixApi();
+    case 'GOGOANIME': {
+      const api = new GogoanimeApi();
       const source = await api.getEpisodeSource(providerAnimeId, episode);
 
       return source;
     }
-    case 'GOGOANIME': {
-      const api = new GogoanimeApi();
+    case 'ANIMEHEAVEN': {
+      const api = new AnimeHeavenAPI();
       const source = await api.getEpisodeSource(providerAnimeId, episode);
 
       return source;

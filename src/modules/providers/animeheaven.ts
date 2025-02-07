@@ -1,29 +1,20 @@
-import {
-  UnifiedMediaResult,
-  UnifiedSources,
-} from 'sofamaxxing/dist/models/unifiedTypes';
-import AnimeUnity from 'sofamaxxing/dist/providers/AnimeUnity';
+import { UnifiedMediaResult, UnifiedSources } from 'sofamaxxing/dist/models/unifiedTypes';
+import AnimeHeaven from 'sofamaxxing/dist/providers/AnimeHeaven';
 
 import ProviderCache from './cache';
 
-const api = new AnimeUnity();
+const api = new AnimeHeaven();
 const cache = new ProviderCache();
 
-class AnimeUnityApi {
+// no dub
+class AnimeHeavenAPI {
   searchInProvider = async (
     query: string,
     dubbed: boolean,
   ): Promise<UnifiedMediaResult[] | null> => {
     try {
-      const searchResults = await api.search(
-        `${dubbed ? `${query} (ITA)` : query}`,
-      );
-
-      return searchResults.results.filter((result: any) =>
-        dubbed
-          ? (result.title as string).includes('(ITA)')
-          : !(result.title as string).includes('(ITA)'),
-      );
+      const searchResults = await api.search(query);
+      return searchResults.results;
     } catch (error) {
       console.log(error);
       return null;
@@ -43,21 +34,13 @@ class AnimeUnityApi {
     // start searching
     for (const animeSearch of animeTitles) {
       // search anime (per dub too)
-      const searchResults = await api.search(
-        `${dubbed ? `${animeSearch} (ITA)` : animeSearch}`,
-      );
-
-      const filteredResults = searchResults.results.filter((result: any) =>
-        dubbed
-          ? (result.title as string).includes('(ITA)')
-          : !(result.title as string).includes('(ITA)'),
-      );
+      const searchResults = await api.search(animeSearch)
 
       // find the best result: first check for same name,
       // then check for same release date.
       // finally, update cache
       const animeResult =
-        filteredResults.filter(
+        searchResults.results.filter(
           (result: any) =>
             result.title.toLowerCase().trim() ==
               animeSearch.toLowerCase().trim() ||
@@ -74,15 +57,13 @@ class AnimeUnityApi {
     animeId: string,
     episode: number,
   ): Promise<UnifiedSources | null> => {
-    const mediaInfo = await api.fetchInfo(
-      animeId,
-      episode > 120 ? Math.floor(episode / 120) + 1 : 1,
-    );
+    const mediaInfo = await api.fetchInfo(animeId);
 
     const episodeId =
       mediaInfo?.episodes?.find((ep: any) => ep.number == episode)?.id ?? null;
 
     if (episodeId) {
+
       const sources = await api.fetchSources(episodeId);
       return sources as UnifiedSources;
     }
@@ -92,4 +73,4 @@ class AnimeUnityApi {
   };
 }
 
-export default AnimeUnityApi;
+export default AnimeHeavenAPI;

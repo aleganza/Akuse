@@ -22,7 +22,7 @@ export const animeCustomTitles: AnimeCustomTitles = {
     '132052': { title: 'Kakkou no Iinazuke', index: 1 }, // same releaseDate with another one
     '168623': { title: 'Dahlia in Bloom', index: 0 }, // anilist has wrong name (Madougushi Dahlia wa Utsumukanai -> Madougushi Dahliya wa Utsumukanai)
   },
-  ANIX: {},
   HIANIME: {},
+  ANIMEHEAVEN: {},
   ANIMEUNITY: {},
 };

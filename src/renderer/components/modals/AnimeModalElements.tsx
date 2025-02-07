@@ -142,10 +142,6 @@ export const AnimeModalEpisodes: React.FC<{
   const availableEpisodes = getAvailableEpisodes(listAnimeData.media);
   const episodes = getEpisodes(listAnimeData.media);
 
-  if (listAnimeData.media.id == 21) {
-    console.log(listAnimeData.media.airingSchedule?.edges);
-  }
-
   return (
     <li>
       {format === 'Movie' ? (

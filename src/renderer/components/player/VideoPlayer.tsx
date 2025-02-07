@@ -311,6 +311,7 @@ const VideoPlayer: React.FC<{
   };
 
   useEffect(() => {
+    console.log(source);
     if (source !== null) {
       const bestVideo = getBestQualityVideo(source.sources);
       playSource(bestVideo, source.headers, source.subtitles);
@@ -376,7 +377,11 @@ const VideoPlayer: React.FC<{
     return videos[0];
   };
 
-  const playSource = (video: IVideo, headers?: any, subtitles?: ISubtitle[]) => {
+  const playSource = (
+    video: IVideo,
+    headers?: any,
+    subtitles?: ISubtitle[],
+  ) => {
     if (video.isM3U8) {
       playHlsVideo(video, headers, subtitles);
     } else {
@@ -386,7 +391,11 @@ const VideoPlayer: React.FC<{
     }
   };
 
-  const playHlsVideo = (video: IVideo, headers?: any, subtitles?: ISubtitle[]) => {
+  const playHlsVideo = (
+    video: IVideo,
+    headers?: any,
+    subtitles?: ISubtitle[],
+  ) => {
     const url = video.url;
     try {
       if (Hls.isSupported() && videoRef.current) {
@@ -403,7 +412,14 @@ const VideoPlayer: React.FC<{
 
         var hls = new Hls();
         hls.loadSource(url);
-        if (subtitles) {
+        if (
+          subtitles?.some(
+            (value) =>
+              value.lang &&
+              value.lang !== 'Thumbnails' &&
+              value.lang !== 'thumbnails',
+          )
+        ) {
           const tracks = subtitles;
           setSubtitleTracks(tracks);
 

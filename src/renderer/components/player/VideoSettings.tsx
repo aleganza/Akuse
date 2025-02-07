@@ -2,7 +2,6 @@ import { ISubtitle } from '@consumet/extensions';
 import {
   faClock,
   faGear,
-  faHeadphones,
   faLanguage,
   faRotateRight,
   faVideo,
@@ -21,7 +20,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import Dots from 'react-activity/dist/Dots';
 
 import Select from '../Select';
 
@@ -53,8 +51,6 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
     },
     ref,
   ) => {
-    subtitleTracks = subtitleTracks?.filter((value) => value.lang);
-
     const [hlsData, setHlsData] = useState<Hls>();
     const [watchDubbed, setWatchDubbed] = useState<boolean>(
       STORE.get('dubbed') as boolean,
@@ -289,12 +285,6 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
                 <Select
                   zIndex={10}
                   options={subtitleTracks
-                    .filter(
-                      (value) =>
-                        value.lang &&
-                        value.lang !== 'Thumbnails' &&
-                        value.lang !== 'thumbnails',
-                    )
                     .map((value) => ({
                       label: value.lang,
                       value: value,
