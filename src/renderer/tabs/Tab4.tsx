@@ -11,13 +11,15 @@ import Select from '../components/Select';
 
 const STORE = new Store();
 
+export type Provider = 'HIANIME' | 'GOGOANIME' | 'ANIMEHEAVEN' | 'ANIMEUNITY';
+
 interface Option {
   value: any;
   label: string;
 }
 
 export const LANGUAGE_OPTIONS: Option[] = [
-  { value: 'HIANIME', label: '🌍 HiAnime' }, // zoro from consumet
+  { value: 'HIANIME', label: '🌍 HiAnime' },
   { value: 'GOGOANIME', label: '🇺🇸 Gogoanime ' },
   { value: 'ANIMEHEAVEN', label: '🇺🇸 AnimeHeaven ' },
   { value: 'ANIMEUNITY', label: '🇮🇹 AnimeUnity' },

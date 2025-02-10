@@ -84,8 +84,9 @@ export const ButtonCircle: React.FC<ButtonCircleProps> = ({
     <div className="circle-button-container">
       {hoverButtons && (
         <div className="hover-buttons">
-          {hoverButtons?.map((value) => (
+          {hoverButtons?.map((value, index) => (
             <ButtonCircle
+              key={index}
               icon={value.icon}
               tint="empty"
               shadow

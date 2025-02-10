@@ -12,8 +12,12 @@ import {
   searchInProvider as searchInProviderApi,
 } from '../../../modules/providers/api';
 import { ListAnimeData } from '../../../types/anilistAPITypes';
-import { LANGUAGE_OPTIONS } from '../../tabs/Tab4';
+import { LANGUAGE_OPTIONS, Provider } from '../../tabs/Tab4';
 import { ModalPage, ModalPageShadow, ModalPageSizeableContent } from './Modal';
+import {
+  getProviderSearchMatch,
+  setProviderSearchMatch,
+} from '../../../modules/storeVariables';
 
 const modalsRoot = document.getElementById('modals-root');
 const STORE = new Store();
@@ -25,21 +29,42 @@ const AutomaticProviderSearchModal: React.FC<{
   onClose: () => void;
   onPlay: (providerAnimeId: string) => void;
 }> = ({ show, listAnimeData, episode, onClose, onPlay }) => {
+  const provider = STORE.get('source_flag') as Provider;
+  const dubbed = STORE.get('dubbed') as boolean;
+
   const modalRef = useRef<HTMLDivElement>(null);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [results, setResults] = useState<any[]>([]);
   const [selectedTitle, setSelectedTitle] = useState('');
 
-  const handlePlayClick = (providerAnimeId: string) => {
-    onPlay(providerAnimeId);
+  const handlePlayClick = (providerResult: any) => {
+    rememberChoice(providerResult);
+    onPlay(providerResult.id);
     closeModal();
+  };
+
+  /**
+   * when the user chooses a result,
+   * cache and remember the choice
+   *
+   * @param providerResult
+   */
+  const rememberChoice = (providerResult: any) => {
+    setProviderSearchMatch(
+      listAnimeData!.media.id!,
+      provider,
+      dubbed,
+      providerResult,
+    );
   };
 
   const closeModal = () => {
     onClose();
-    setResults([]);
-    setSelectedTitle('');
+    setTimeout(() => {
+      setResults([]);
+      setSelectedTitle('');
+    }, 400);
   };
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -48,6 +73,16 @@ const AutomaticProviderSearchModal: React.FC<{
   };
 
   const startAutomaticMatch = async () => {
+    const cachedResult = getProviderSearchMatch(
+      listAnimeData!.media.id!,
+      provider,
+      dubbed,
+    );
+    if (cachedResult !== null) {
+      setResults([cachedResult]);
+      return;
+    }
+
     setResults([]);
     setLoading(true);
 
@@ -125,13 +160,11 @@ const AutomaticProviderSearchModal: React.FC<{
               {results.length !== 0 ? (
                 <span>
                   {`Results from ${
-                    LANGUAGE_OPTIONS.find(
-                      (l) => l.value == (STORE.get('source_flag') as string),
-                    )?.label
+                    LANGUAGE_OPTIONS.find((l) => l.value == provider)?.label
                   }`}
                 </span>
               ) : (
-                <span>No matching results.</span>
+                <span>No matching results. Please try searching again.</span>
               )}
 
               <div className="cards-group">
@@ -141,7 +174,7 @@ const AutomaticProviderSearchModal: React.FC<{
                       key={index}
                       className="card"
                       onClick={() => {
-                        handlePlayClick(result.id);
+                        handlePlayClick(result);
                       }}
                     >
                       {result?.image && (

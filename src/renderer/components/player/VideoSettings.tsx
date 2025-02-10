@@ -68,6 +68,8 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
       useState<boolean>(false);
     const [subtitleTrack, setSubtitleTrack] = useState<ISubtitle | undefined>();
 
+    console.log('culo')
+
     useEffect(() => {
       if (videoRef.current) {
         videoRef.current.volume = volume;

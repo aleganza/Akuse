@@ -311,10 +311,9 @@ const VideoPlayer: React.FC<{
   };
 
   useEffect(() => {
-    console.log(source);
     if (source !== null) {
       const bestVideo = getBestQualityVideo(source.sources);
-      playSource(bestVideo, source.headers, source.subtitles);
+      playSource(bestVideo, /* source.headers,*/ source.subtitles);
 
       // resume from tracked progress
       const animeId = (listAnime.media.id ||
@@ -399,17 +398,6 @@ const VideoPlayer: React.FC<{
     const url = video.url;
     try {
       if (Hls.isSupported() && videoRef.current) {
-        // append headers if needed
-        // const hlsConfig: Partial<HlsConfig> = headers
-        // ? {
-        //     xhrSetup: (xhr, url) => {
-        //       Object.entries(headers).forEach(([key, value]) => {
-        //         xhr.setRequestHeader(key, value as any);
-        //       });
-        //     },
-        //   }
-        // : {};
-
         var hls = new Hls();
         hls.loadSource(url);
         if (
