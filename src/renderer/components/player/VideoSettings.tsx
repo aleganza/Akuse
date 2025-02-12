@@ -121,6 +121,7 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
     const handleQualityChange = (index: number) => {
       if (hlsData) {
         hlsData.currentLevel = index;
+        STORE.set("last_quality", index);
       }
     };
 
