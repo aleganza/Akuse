@@ -44,15 +44,15 @@
 
 The languages where both the sub and dub don't work are implemented in the app, but they aren't selectable.
 
-| Source     | Languages                                                        | Sub  | Dub | In-App name |
+| Source     | Languages                                                        | Sub  | Dub | Notes |
 | ---------- | ---------------------------------------------------------------- | ---  | ----| ---------   |
-| Gogoanime  | English                                                          | ✅   | ✅   | 🇺🇸 English     |
-| HiAnime    | English, Arabic, French, German, Portuguese, Russian, Spanish... | ✅   | ❌   | 🌍 Universal   |
-| AnimeUnity | Italian                                                          | ✅   | ✅   | 🇮🇹 Italian     |
-| MonosChinos | Spanish                                                          | ❌   | ❌   | 🇪🇸 Spanish     |
-| AnimeDrive | Hungarian                                                        | ❌   | ❌   | 🇭🇺 Hungarian   |
-
-> Note: HiAnime doesn't always provide all the languages!
+| 🌍 HiAnime    | English, Arabic, French, German, Portuguese, Russian, Spanish... | ✅   | ❌   | Unreliable, slow, doesn't always provide all the languages  |
+| 🇺🇸 Gogoanime  | English                                                          | ❌   | ❌   | Broken     |
+| 🇺🇸 Yuki  | English                                                          | ✅   | ✅   | Recommended     |
+| 🇺🇸 Maze  | English                                                          | ❌   | ❌   | Broken, needs proxy     |
+| 🇺🇸 Pahe  | English                                                          | ❌   | ❌   | Broken, needs proxy     |
+| 🇺🇸 AnimeHeaven| English                                                          | ✅   | ❌   | Works for some anime     |
+| 🇮🇹 AnimeUnity | Italian                                                          | ✅   | ✅   | Italian recommended     |
 
 # Other info
 
