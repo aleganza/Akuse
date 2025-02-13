@@ -88,7 +88,7 @@ const TopControls: React.FC<TopControlsProps> = ({
           </span>
         </div>
       </div>
-      <div className="center"></div>
+      <div className="center" />
       <div className="right">
         <VideoSettings
           show={showSettings}

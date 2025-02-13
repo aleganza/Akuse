@@ -69,27 +69,27 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
       useState<boolean>(false);
     const [subtitleTrack, setSubtitleTrack] = useState<ISubtitle | undefined>();
 
-    useEffect(() => {
-      console.log('show');
-    }, [show]);
-    useEffect(() => {
-      console.log('videoRef');
-    }, [videoRef]);
-    useEffect(() => {
-      console.log('subtitleTracks');
-    }, [subtitleTracks]);
-    useEffect(() => {
-      console.log('hls');
-    }, [hls]);
-    useEffect(() => {
-      console.log('onShow');
-    }, [onShow]);
-    useEffect(() => {
-      console.log('onSubtitleTrack');
-    }, [onSubtitleTrack]);
-    useEffect(() => {
-      console.log('onChangeEpisode');
-    }, [onChangeEpisode]);
+    // useEffect(() => {
+    //   console.log('show');
+    // }, [show]);
+    // useEffect(() => {
+    //   console.log('videoRef');
+    // }, [videoRef]);
+    // useEffect(() => {
+    //   console.log('subtitleTracks');
+    // }, [subtitleTracks]);
+    // useEffect(() => {
+    //   console.log('hls');
+    // }, [hls]);
+    // useEffect(() => {
+    //   console.log('onShow');
+    // }, [onShow]);
+    // useEffect(() => {
+    //   console.log('onSubtitleTrack');
+    // }, [onSubtitleTrack]);
+    // useEffect(() => {
+    //   console.log('onChangeEpisode');
+    // }, [onChangeEpisode]);
 
     useEffect(() => {
       if (videoRef.current) {

@@ -11,6 +11,7 @@ import GogoanimeApi from './gogoanime';
 import HiAnimeAPI from './hianime';
 import AniPlayAPI from './aniplay';
 import axios from 'axios';
+import AnimeParadiseAPI from './animeparadise';
 
 const STORE = new Store();
 
@@ -27,10 +28,6 @@ export const searchInProvider = async (query: string) => {
       const api = new GogoanimeApi();
       return await api.searchInProvider(query, dubbed);
     }
-    case 'ANIMEHEAVEN': {
-      const api = new AnimeHeavenAPI();
-      return await api.searchInProvider(query, dubbed);
-    }
     case 'YUKI': {
       const api = new AniPlayAPI();
       return await api.searchInProvider(query, dubbed);
@@ -41,6 +38,14 @@ export const searchInProvider = async (query: string) => {
     }
     case 'PAHE': {
       const api = new AniPlayAPI();
+      return await api.searchInProvider(query, dubbed);
+    }
+    case 'ANIMEPARADISE': {
+      const api = new AnimeParadiseAPI();
+      return await api.searchInProvider(query, dubbed);
+    }
+    case 'ANIMEHEAVEN': {
+      const api = new AnimeHeavenAPI();
       return await api.searchInProvider(query, dubbed);
     }
     case 'ANIMEUNITY': {
@@ -80,6 +85,15 @@ export const searchAutomaticMatchInProvider = async (
     }
     case 'GOGOANIME': {
       const api = new GogoanimeApi();
+      return await api.searchMatchInProvider(
+        animeTitles,
+        customTitle ? customTitle.index : 0,
+        dubbed,
+        listAnimeData.media.startDate?.year ?? 0,
+      );
+    }
+    case 'ANIMEPARADISE': {
+      const api = new AnimeParadiseAPI();
       return await api.searchMatchInProvider(
         animeTitles,
         customTitle ? customTitle.index : 0,
@@ -157,6 +171,12 @@ export const getSourceFromProvider = async (
     }
     case 'GOGOANIME': {
       const api = new GogoanimeApi();
+      const source = await api.getEpisodeSource(providerAnimeId, episode);
+
+      return source;
+    }
+    case 'ANIMEPARADISE': {
+      const api = new AnimeParadiseAPI();
       const source = await api.getEpisodeSource(providerAnimeId, episode);
 
       return source;

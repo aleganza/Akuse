@@ -17,6 +17,7 @@ export type Provider =
   | 'YUKI'
   | 'MAZE'
   | 'PAHE'
+  | 'ANIMEPARADISE'
   | 'ANIMEHEAVEN'
   | 'ANIMEUNITY';
 
@@ -27,12 +28,13 @@ interface Option {
 
 export const LANGUAGE_OPTIONS: Option[] = [
   { value: 'HIANIME', label: '🌍 HiAnime' },
-  { value: 'GOGOANIME', label: '🇺🇸 Gogoanime' },
   { value: 'YUKI', label: '🇺🇸 Yuki' },
+  { value: 'ANIMEUNITY', label: '🇮🇹 AnimeUnity' },
+  { value: 'ANIMEPARADISE', label: '🇺🇸 AnimeParadise' },
+  { value: 'ANIMEHEAVEN', label: '🇺🇸 AnimeHeaven' },
+  { value: 'GOGOANIME', label: '🇺🇸 Gogoanime' },
   { value: 'MAZE', label: '🇺🇸 Maze' },
   { value: 'PAHE', label: '🇺🇸 Pahe' },
-  { value: 'ANIMEHEAVEN', label: '🇺🇸 AnimeHeaven' },
-  { value: 'ANIMEUNITY', label: '🇮🇹 AnimeUnity' },
 ];
 
 const Element: React.FC<{
@@ -279,7 +281,7 @@ const Tab4: React.FC<{ viewerId: number | null }> = ({ viewerId }) => {
               options={LANGUAGE_OPTIONS}
               zIndex={5}
               onChange={handleLanguageChange}
-              width={160}
+              width={180}
             />
 
             <CheckboxElement
