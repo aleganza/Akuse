@@ -98,14 +98,14 @@ const TopControls: React.FC<TopControlsProps> = ({
               value.lang !== 'Thumbnails' &&
               value.lang !== 'thumbnails',
           )}
+          videoRef={videoRef}
+          ref={settingsRef}
+          hls={hls}
           onSubtitleTrack={onSubtitleTrack}
           onShow={(show) => {
             closeOthers();
             setShowSettings(show);
           }}
-          videoRef={videoRef}
-          ref={settingsRef}
-          hls={hls}
           onChangeEpisode={onChangeEpisode}
         />
         <VideoEpisodesChange

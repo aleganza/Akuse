@@ -15,6 +15,7 @@ import Hls from 'hls.js';
 import React, {
   ChangeEvent,
   forwardRef,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -68,7 +69,27 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
       useState<boolean>(false);
     const [subtitleTrack, setSubtitleTrack] = useState<ISubtitle | undefined>();
 
-    console.log('culo')
+    useEffect(() => {
+      console.log('show');
+    }, [show]);
+    useEffect(() => {
+      console.log('videoRef');
+    }, [videoRef]);
+    useEffect(() => {
+      console.log('subtitleTracks');
+    }, [subtitleTracks]);
+    useEffect(() => {
+      console.log('hls');
+    }, [hls]);
+    useEffect(() => {
+      console.log('onShow');
+    }, [onShow]);
+    useEffect(() => {
+      console.log('onSubtitleTrack');
+    }, [onSubtitleTrack]);
+    useEffect(() => {
+      console.log('onChangeEpisode');
+    }, [onChangeEpisode]);
 
     useEffect(() => {
       if (videoRef.current) {
@@ -114,27 +135,26 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
       setHlsData(hls);
     }, [hls]);
 
-    const toggleShow = () => {
+    const toggleShow = useCallback(() => {
       onShow(!show);
-    };
+    }, [show, onShow]);
 
-    const handleQualityChange = (index: number) => {
-      if (hlsData) {
-        hlsData.currentLevel = index;
-      }
-    };
+    const handleQualityChange = useCallback(
+      (index: number) => {
+        if (hlsData) {
+          hlsData.currentLevel = index;
+        }
+      },
+      [hlsData],
+    );
 
-    const toggleMute = () => {
+    const toggleMute = useCallback(() => {
       if (videoRef.current) {
         videoRef.current.muted = !videoRef.current.muted;
         setIsMuted(videoRef.current.muted);
-        if (videoRef.current.muted) {
-          setVolume(0);
-        } else {
-          setVolume(videoRef.current.volume);
-        }
+        setVolume(videoRef.current.muted ? 0 : videoRef.current.volume);
       }
-    };
+    }, [videoRef]);
 
     const handleVolumeChange = (event: ChangeEvent<HTMLInputElement>) => {
       const newVolume = parseFloat(event.target.value);
@@ -286,11 +306,10 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
                 </span>
                 <Select
                   zIndex={10}
-                  options={subtitleTracks
-                    .map((value) => ({
-                      label: value.lang,
-                      value: value,
-                    }))}
+                  options={subtitleTracks.map((value) => ({
+                    label: value.lang,
+                    value: value,
+                  }))}
                   selectedValue={subtitleTrack}
                   onChange={handleChangeSubtitleTrack}
                   width={100}
@@ -315,36 +334,6 @@ const VideoSettings = forwardRef<HTMLDivElement, SettingsProps>(
                 width={100}
               />
             </li>
-            {/* <li className="dub">
-              <span>
-                <FontAwesomeIcon className="i label" icon={faHeadphones} />
-                Dub
-              </span>
-              {changeEpisodeLoading ? (
-                <div className="activity-indicator">
-                  <Dots />
-                </div>
-              ) : (
-                <label className="switch">
-                  <input
-                    type="checkbox"
-                    checked={watchDubbed}
-                    onChange={handleWatchDubbedChange}
-                  />
-                  <span className="slider round"></span>
-                </label>
-              )}
-            </li> */}
-            {/* <span className="provider-info">
-              {
-                LANGUAGE_OPTIONS.find(
-                  (l) => l.value == (STORE.get('source_flag') as string),
-                )?.label
-              }{' '}
-              <span className="dub">
-                {(STORE.get('dubbed') as boolean) ? 'DUB' : 'SUB'}
-              </span>
-            </span> */}
           </div>
         )}
       </div>
