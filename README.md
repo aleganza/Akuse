@@ -51,6 +51,7 @@ The languages where both the sub and dub don't work are implemented in the app, 
 | 🇺🇸 Yuki  | English                                                          | ✅   | ✅   | Recommended     |
 | 🇺🇸 Maze  | English                                                          | ❌   | ❌   | Broken, needs proxy     |
 | 🇺🇸 Pahe  | English                                                          | ❌   | ❌   | Broken, needs proxy     |
+| 🇺🇸 AnimeParadise  | English                                                          | ✅   | ❌   | Works for many anime     |
 | 🇺🇸 AnimeHeaven| English                                                          | ✅   | ❌   | Works for some anime     |
 | 🇮🇹 AnimeUnity | Italian                                                          | ✅   | ✅   | Italian recommended     |
 
