@@ -1,5 +1,8 @@
-import { UnifiedMediaResult, UnifiedSources } from 'sofamaxxing/dist/models/unifiedTypes';
-import AnimeHeaven from 'sofamaxxing/dist/providers/AnimeHeaven';
+import {
+  UnifiedMediaResult,
+  UnifiedSources,
+} from 'sofamaxxing.ts/dist/models/unifiedTypes';
+import AnimeHeaven from 'sofamaxxing.ts/dist/providers/AnimeHeaven';
 
 import ProviderCache from './cache';
 
@@ -31,45 +34,55 @@ class AnimeHeavenAPI {
     dubbed: boolean,
     releaseDate: number,
   ): Promise<UnifiedMediaResult | null> => {
-    // start searching
-    for (const animeSearch of animeTitles) {
-      // search anime (per dub too)
-      const searchResults = await api.search(animeSearch)
+    try {
+      // start searching
+      for (const animeSearch of animeTitles) {
+        // search anime (per dub too)
+        const searchResults = await api.search(animeSearch);
 
-      // find the best result: first check for same name,
-      // then check for same release date.
-      // finally, update cache
-      const animeResult =
-        searchResults.results.filter(
-          (result: any) =>
-            result.title.toLowerCase().trim() ==
-              animeSearch.toLowerCase().trim() ||
-            result.releaseDate == releaseDate.toString(),
-        )[index] ?? null;
+        // find the best result: first check for same name,
+        // then check for same release date.
+        // finally, update cache
+        const animeResult =
+          searchResults.results.filter(
+            (result: any) =>
+              result.title.toLowerCase().trim() ==
+                animeSearch.toLowerCase().trim() ||
+              result.releaseDate == releaseDate.toString(),
+          )[index] ?? null;
 
-      if (animeResult) return animeResult;
+        if (animeResult) return animeResult;
+      }
+
+      return null;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
-
-    return null;
   };
 
   getEpisodeSource = async (
     animeId: string,
     episode: number,
   ): Promise<UnifiedSources | null> => {
-    const mediaInfo = await api.fetchInfo(animeId);
+    try {
+      const mediaInfo = await api.fetchInfo(animeId);
 
-    const episodeId =
-      mediaInfo?.episodes?.find((ep: any) => ep.number == episode)?.id ?? null;
+      const episodeId =
+        mediaInfo?.episodes?.find((ep: any) => ep.number == episode)?.id ??
+        null;
 
-    if (episodeId) {
+      if (episodeId) {
+        const sources = await api.fetchSources(episodeId);
+        return sources as UnifiedSources;
+      }
 
-      const sources = await api.fetchSources(episodeId);
-      return sources as UnifiedSources;
+      // episode not found
+      return null;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
-
-    // episode not found
-    return null;
   };
 }
 

@@ -9,6 +9,7 @@ import AnimeHeavenAPI from './animeheaven';
 import AnimeUnityApi from './animeunity';
 import GogoanimeApi from './gogoanime';
 import HiAnimeAPI from './hianime';
+import AniPlayAPI from './aniplay';
 import axios from 'axios';
 
 const STORE = new Store();
@@ -30,13 +31,25 @@ export const searchInProvider = async (query: string) => {
       const api = new AnimeHeavenAPI();
       return await api.searchInProvider(query, dubbed);
     }
+    case 'YUKI': {
+      const api = new AniPlayAPI();
+      return await api.searchInProvider(query, dubbed);
+    }
+    case 'MAZE': {
+      const api = new AniPlayAPI();
+      return await api.searchInProvider(query, dubbed);
+    }
+    case 'PAHE': {
+      const api = new AniPlayAPI();
+      return await api.searchInProvider(query, dubbed);
+    }
     case 'ANIMEUNITY': {
       const api = new AnimeUnityApi();
       return await api.searchInProvider(query, dubbed);
     }
   }
 
-  return null
+  return null;
 };
 
 export const searchAutomaticMatchInProvider = async (
@@ -83,6 +96,33 @@ export const searchAutomaticMatchInProvider = async (
         listAnimeData.media.startDate?.year ?? 0,
       );
     }
+    case 'YUKI': {
+      const api = new AniPlayAPI();
+      return await api.searchMatchInProvider(
+        animeTitles,
+        customTitle ? customTitle.index : 0,
+        dubbed,
+        listAnimeData.media.startDate?.year ?? 0,
+      );
+    }
+    case 'MAZE': {
+      const api = new AniPlayAPI();
+      return await api.searchMatchInProvider(
+        animeTitles,
+        customTitle ? customTitle.index : 0,
+        dubbed,
+        listAnimeData.media.startDate?.year ?? 0,
+      );
+    }
+    case 'PAHE': {
+      const api = new AniPlayAPI();
+      return await api.searchMatchInProvider(
+        animeTitles,
+        customTitle ? customTitle.index : 0,
+        dubbed,
+        listAnimeData.media.startDate?.year ?? 0,
+      );
+    }
     case 'ANIMEUNITY': {
       const api = new AnimeUnityApi();
       return await api.searchMatchInProvider(
@@ -107,7 +147,11 @@ export const getSourceFromProvider = async (
   switch (lang) {
     case 'HIANIME': {
       const api = new HiAnimeAPI();
-      const source = await api.getEpisodeSource(providerAnimeId, episode, dubbed);
+      const source = await api.getEpisodeSource(
+        providerAnimeId,
+        episode,
+        dubbed,
+      );
 
       return source;
     }
@@ -120,6 +164,39 @@ export const getSourceFromProvider = async (
     case 'ANIMEHEAVEN': {
       const api = new AnimeHeavenAPI();
       const source = await api.getEpisodeSource(providerAnimeId, episode);
+
+      return source;
+    }
+    case 'YUKI': {
+      const api = new AniPlayAPI();
+      const source = await api.getEpisodeSource(
+        providerAnimeId,
+        episode,
+        'yuki',
+        dubbed,
+      );
+
+      return source;
+    }
+    case 'MAZE': {
+      const api = new AniPlayAPI();
+      const source = await api.getEpisodeSource(
+        providerAnimeId,
+        episode,
+        'maze',
+        dubbed,
+      );
+
+      return source;
+    }
+    case 'PAHE': {
+      const api = new AniPlayAPI();
+      const source = await api.getEpisodeSource(
+        providerAnimeId,
+        episode,
+        'pahe',
+        dubbed,
+      );
 
       return source;
     }

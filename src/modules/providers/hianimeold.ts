@@ -1,5 +1,5 @@
-import { UnifiedMediaResult, UnifiedSources } from 'sofamaxxing/dist/models/unifiedTypes';
-import HiAnime from 'sofamaxxing/dist/providers/HiAnime';
+import { UnifiedMediaResult, UnifiedSources } from 'sofamaxxing.ts/dist/models/unifiedTypes';
+import HiAnime from 'sofamaxxing.ts/dist/providers/HiAnime';
 
 import ProviderCache from './cache';
 

@@ -2,29 +2,21 @@ import {
   UnifiedMediaResult,
   UnifiedSources,
 } from 'sofamaxxing.ts/dist/models/unifiedTypes';
-
+import AniPlay from 'sofamaxxing.ts/dist/providers/AniPlay';
 
 import ProviderCache from './cache';
-import Gogoanime from '@consumet/extensions/dist/providers/anime/gogoanime';
 
-const api = new Gogoanime();
+const api = new AniPlay();
 const cache = new ProviderCache();
 
-class GogoanimeApi {
+class AniPlayAPI {
   searchInProvider = async (
     query: string,
     dubbed: boolean,
   ): Promise<UnifiedMediaResult[] | null> => {
     try {
-      const searchResults = await api.search(
-        `${dubbed ? `${query} (Dub)` : query}`,
-      );
-
-      return searchResults.results.filter((result: any) =>
-        dubbed
-          ? (result.title as string).includes('(Dub)')
-          : !(result.title as string).includes('(Dub)'),
-      );
+      const searchResults = await api.search(query);
+      return searchResults.results;
     } catch (error) {
       console.log(error);
       return null;
@@ -44,31 +36,19 @@ class GogoanimeApi {
     try {
       // start searching
       for (const animeSearch of animeTitles) {
-        console.log(animeSearch);
         // search anime (per dub too)
-        const searchResults = await api.search(
-          `${dubbed ? `${animeSearch} (Dub)` : animeSearch}`,
-        );
-        console.log('1');
-
-        const filteredResults = searchResults.results.filter((result: any) =>
-          dubbed
-            ? (result.title as string).includes('(Dub)')
-            : !(result.title as string).includes('(Dub)'),
-        );
-        console.log('2');
+        const searchResults = await api.search(animeSearch);
 
         // find the best result: first check for same name,
         // then check for same release date.
         // finally, update cache
         const animeResult =
-          filteredResults.filter(
+          searchResults.results.filter(
             (result: any) =>
               result.title.toLowerCase().trim() ==
                 animeSearch.toLowerCase().trim() ||
               result.releaseDate == releaseDate.toString(),
           )[index] ?? null;
-        console.log('3');
 
         if (animeResult) return animeResult;
       }
@@ -83,16 +63,22 @@ class GogoanimeApi {
   getEpisodeSource = async (
     animeId: string,
     episode: number,
+    host: 'maze' | 'pahe' | 'yuki',
+    dubbed: boolean,
   ): Promise<UnifiedSources | null> => {
     try {
-      const mediaInfo = await api.fetchAnimeInfo(animeId);
+      const mediaInfo = await api.fetchInfo(animeId);
 
       const episodeId =
         mediaInfo?.episodes?.find((ep: any) => ep.number == episode)?.id ??
         null;
 
       if (episodeId) {
-        const sources = await api.fetchEpisodeSources(episodeId);
+        const sources = await api.fetchSources(
+          episodeId,
+          host,
+          dubbed ? 'dub' : 'sub',
+        );
         return sources as UnifiedSources;
       }
 
@@ -105,4 +91,4 @@ class GogoanimeApi {
   };
 }
 
-export default GogoanimeApi;
+export default AniPlayAPI;

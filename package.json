@@ -118,7 +118,7 @@
     "react-loading-skeleton": "^3.4.0",
     "react-player": "^2.16.0",
     "react-router-dom": "^6.16.0",
-    "sofamaxxing": "github:aleganza/sofamaxxing",
+    "sofamaxxing.ts": "github:aleganza/sofamaxxing.ts",
     "stream": "^0.0.2"
   },
   "devDependencies": {

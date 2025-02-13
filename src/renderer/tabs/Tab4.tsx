@@ -11,7 +11,14 @@ import Select from '../components/Select';
 
 const STORE = new Store();
 
-export type Provider = 'HIANIME' | 'GOGOANIME' | 'ANIMEHEAVEN' | 'ANIMEUNITY';
+export type Provider =
+  | 'HIANIME'
+  | 'GOGOANIME'
+  | 'YUKI'
+  | 'MAZE'
+  | 'PAHE'
+  | 'ANIMEHEAVEN'
+  | 'ANIMEUNITY';
 
 interface Option {
   value: any;
@@ -20,8 +27,11 @@ interface Option {
 
 export const LANGUAGE_OPTIONS: Option[] = [
   { value: 'HIANIME', label: '🌍 HiAnime' },
-  { value: 'GOGOANIME', label: '🇺🇸 Gogoanime ' },
-  { value: 'ANIMEHEAVEN', label: '🇺🇸 AnimeHeaven ' },
+  { value: 'GOGOANIME', label: '🇺🇸 Gogoanime' },
+  { value: 'YUKI', label: '🇺🇸 Yuki' },
+  { value: 'MAZE', label: '🇺🇸 Maze' },
+  { value: 'PAHE', label: '🇺🇸 Pahe' },
+  { value: 'ANIMEHEAVEN', label: '🇺🇸 AnimeHeaven' },
   { value: 'ANIMEUNITY', label: '🇮🇹 AnimeUnity' },
 ];
 
