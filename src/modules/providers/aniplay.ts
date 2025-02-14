@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import {
   UnifiedMediaResult,
   UnifiedSources,
@@ -78,7 +80,9 @@ class AniPlayAPI {
           episodeId,
           host,
           dubbed ? 'dub' : 'sub',
+          host === 'maze' || host === 'pahe',
         );
+        console.log(sources);
         return sources as UnifiedSources;
       }
 

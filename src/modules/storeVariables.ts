@@ -7,7 +7,7 @@ const defaultValues = {
   update_progress: true,
   autoplay_next: true,
   dubbed: false,
-  source_flag: 'HIANIME',
+  source_flag: 'YUKI',
   subtitle_language: 'English',
   intro_skip_time: 85,
   key_press_skip: 5,
@@ -36,6 +36,18 @@ export const getSourceFlag = async (): Promise<Provider | null> => {
     case 'GOGOANIME': {
       return 'GOGOANIME';
     }
+    case 'YUKI': {
+      return 'YUKI';
+    }
+    case 'MAZE': {
+      return 'MAZE';
+    }
+    case 'PAHE': {
+      return 'PAHE';
+    }
+    case 'ANIMEPARADISE': {
+      return 'ANIMEPARADISE';
+    }
     case 'ANIMEHEAVEN': {
       return 'ANIMEHEAVEN';
     }
@@ -56,10 +68,10 @@ export const getProviderSearchMatch = (
   const cache = STORE.get('provider_match_cache', {}) as any;
   const key = `${anilistId}-${provider}-${dubbed}`;
 
-  console.log(key)
-  console.log(cache[key])
+  console.log(key);
+  console.log(cache[key]);
 
-  return cache[key] ?? null
+  return cache[key] ?? null;
 };
 
 /**

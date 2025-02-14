@@ -313,7 +313,7 @@ const VideoPlayer: React.FC<{
   useEffect(() => {
     if (source !== null) {
       const bestVideo = getBestQualityVideo(source.sources);
-      playSource(bestVideo, /* source.headers,*/ source.subtitles);
+      playSource(bestVideo, source.headers, source.subtitles);
 
       // resume from tracked progress
       const animeId = (listAnime.media.id ||
@@ -381,7 +381,7 @@ const VideoPlayer: React.FC<{
     headers?: any,
     subtitles?: ISubtitle[],
   ) => {
-    if (video.isM3U8) {
+    if (video?.isM3U8) {
       playHlsVideo(video, headers, subtitles);
     } else {
       if (videoRef.current) {

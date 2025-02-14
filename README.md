@@ -44,108 +44,100 @@
 
 The languages where both the sub and dub don't work are implemented in the app, but they aren't selectable.
 
-| Source     | Languages                                                        | Sub  | Dub | Notes |
-| ---------- | ---------------------------------------------------------------- | ---  | ----| ---------   |
-| 🌍 HiAnime    | English, Arabic, French, German, Portuguese, Russian, Spanish... | ✅   | ❌   | Unreliable, slow, doesn't always provide all the languages  |
-| 🇺🇸 Gogoanime  | English                                                          | ❌   | ❌   | Broken     |
-| 🇺🇸 Yuki  | English                                                          | ✅   | ✅   | Recommended     |
-| 🇺🇸 Maze  | English                                                          | ❌   | ❌   | Broken, needs proxy     |
-| 🇺🇸 Pahe  | English                                                          | ❌   | ❌   | Broken, needs proxy     |
-| 🇺🇸 AnimeParadise  | English                                                          | ✅   | ❌   | Works for many anime     |
-| 🇺🇸 AnimeHeaven| English                                                          | ✅   | ❌   | Works for some anime     |
-| 🇮🇹 AnimeUnity | Italian                                                          | ✅   | ✅   | Italian recommended     |
+| Source           | Languages           | Sub | Dub | Notes                                                      |
+| ---------------- | ------------------- | --- | --- | ---------------------------------------------------------- |
+| 🌍 Yuki          | English + many more | ✅  | ✅  | Recommended                                                |
+| 🇮🇹 AnimeUnity    | Italian             | ✅  | ✅  | Italian recommended                                        |
+| 🇺🇸 Maze          | English             | ✅  | ✅  | Great alternative                                          |
+| 🇺🇸 Pahe          | English             | ✅  | ✅  | Great alternative                                          |
+| 🇺🇸 AnimeParadise | English             | ✅  | ❌  | Works for many anime                                       |
+| 🇺🇸 AnimeHeaven   | English             | ✅  | ❌  | Works for some anime                                       |
+| 🌍 HiAnime       | English + many more | ✅  | ❌  | Unreliable, slow, doesn't always provide all the languages |
+| 🇺🇸 Gogoanime     | English             | ❌  | ❌  | Broken                                                     |
 
 # Other info
 
 <details>
   <summary><h2>⚙️ Running locally for development</h2></summary>
 
+Start cloning akuse:
 
-  Start cloning akuse:
+```
+git clone https://github.com/akuse-app/akuse.git
+```
 
-  ```
-  git clone https://github.com/akuse-app/akuse.git
-  ```
-  
-  Next, go to [this link](https://anilist.co/settings/developer) and create a new AniList API Client.
-  As Redirect Uri, you can insert `akuse://index,https://anilist.co/api/v2/oauth/pin` (these are two space seprated uri) and it should work.
-  Now go inside the src/modules folder and create a clientData.ts file with a structure like this:
-  
-  ```bash
-  import { ClientData } from "../types/types";
-  
-  export const clientData: ClientData = {
-    clientId: ,
-    redirectUri: "",
-    clientSecret: "",
-  };
-  ```
-  
-  Fill it with the data retrieved from the creation of your AniList API Client.
-  
-  ```bash
-  # Example:
-  import { ClientData } from "../types/types";
-  
-  export const clientData: ClientData = {
-    clientId: 12345,
-    redirectUri: 'akuse://index',
-    clientSecret: 'iA04TKLO3k3LaVWhxucJwck0glR6uhiv',
-  };
-  ```
-  
-  Next, install its dependencies (make sure npm is installed on your machine):
-  
-  ```
-  npm install
-  ```
-  
-  To start, run:
-  
-  ```
-  npm start
-  ```
+Next, go to [this link](https://anilist.co/settings/developer) and create a new AniList API Client.
+As Redirect Uri, you can insert `akuse://index,https://anilist.co/api/v2/oauth/pin` (these are two space seprated uri) and it should work.
+Now go inside the src/modules folder and create a clientData.ts file with a structure like this:
+
+```bash
+import { ClientData } from "../types/types";
+
+export const clientData: ClientData = {
+  clientId: ,
+  redirectUri: "",
+  clientSecret: "",
+};
+```
+
+Fill it with the data retrieved from the creation of your AniList API Client.
+
+```bash
+# Example:
+import { ClientData } from "../types/types";
+
+export const clientData: ClientData = {
+  clientId: 12345,
+  redirectUri: 'akuse://index',
+  clientSecret: 'iA04TKLO3k3LaVWhxucJwck0glR6uhiv',
+};
+```
+
+Next, install its dependencies (make sure npm is installed on your machine):
+
+```
+npm install
+```
+
+To start, run:
+
+```
+npm start
+```
+
 </details>
 <details>
   <summary><h2>⚠ How to Log-In in AppImage & Development</h2></summary>
-  
 
-  In AppImage and in a Development environment, the Log-In redirect doesn't work since the app is not packed/installed. If you need to work with an authenticated instance, follow these steps:
-  1. open the app using one of the method e.g.
-  
-      ```
-      npm start
-      ```
-        or
-      ```
-      ./path/to/app.AppImage
-      ```
-      
-  2. Now click on the login button and authenticate in the browser. Next, copy the code you are given, go back to akuse and click the navbar element with a laptop icon. Here you can paste your code.
-  
-  3. Finally, paste your code and push the button. If the code you entered is correct, you are now Logged-in, othwerise repeat these steps and see what has gone wrong.
-  
-  **NOTE:** This is not needed in Installed App.
+In AppImage and in a Development environment, the Log-In redirect doesn't work since the app is not packed/installed. If you need to work with an authenticated instance, follow these steps:
+
+1. open the app using one of the method e.g.
+
+   ```
+   npm start
+   ```
+
+   or
+
+   ```
+   ./path/to/app.AppImage
+   ```
+
+2. Now click on the login button and authenticate in the browser. Next, copy the code you are given, go back to akuse and click the navbar element with a laptop icon. Here you can paste your code.
+
+3. Finally, paste your code and push the button. If the code you entered is correct, you are now Logged-in, othwerise repeat these steps and see what has gone wrong.
+
+**NOTE:** This is not needed in Installed App.
+
 </details>
 <details>
   <summary><h2>⌨ Shortcuts</h2></summary>
 
-
-  - Pages
-    - F1: go to Discover page
-    - F2: go to Library page
-    - F3: go to Search page
-  - Video player
-    - Space: play/pause video
-    - Left arrow: fast rewind (5s)
-    - Right arrow: fast forward (5s)
-    - Upper arrow: increase volume
-    - Lower arrow: decrease volume
-    - F11: fullscreen toggler
-    - F: fullscreen toggler
-    - M: mute/unmute video
-    - P: play previous episode
-    - N: play next episode
+- Pages
+  - F1: go to Discover page
+  - F2: go to Library page
+  - F3: go to Search page
+- Video player - Space: play/pause video - Left arrow: fast rewind (5s) - Right arrow: fast forward (5s) - Upper arrow: increase volume - Lower arrow: decrease volume - F11: fullscreen toggler - F: fullscreen toggler - M: mute/unmute video - P: play previous episode - N: play next episode
 </details>
 
 ## 🐛 Known Issues
@@ -163,7 +155,7 @@ The languages where both the sub and dub don't work are implemented in the app, 
 - [This API](https://api.ani.zip/mappings?anilist_id=21): used to fetch episodes info and thumbnails
 - [AniSkip API](https://api.aniskip.com/api-docs#/skip-times/SkipTimesControllerV2_getSkipTimes): used to fetch episode intros & outros.
 - [Aniwatch API](https://github.com/ghoshRitesh12/aniwatch-api): used to get hianime episode sources if consumet fails to.
-<br/>
+  <br/>
 
 # Legal
 
