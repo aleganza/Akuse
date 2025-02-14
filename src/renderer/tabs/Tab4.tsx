@@ -27,14 +27,14 @@ interface Option {
 }
 
 export const LANGUAGE_OPTIONS: Option[] = [
-  { value: 'HIANIME', label: '🌍 HiAnime' },
   { value: 'YUKI', label: '🇺🇸 Yuki' },
   { value: 'ANIMEUNITY', label: '🇮🇹 AnimeUnity' },
-  { value: 'ANIMEPARADISE', label: '🇺🇸 AnimeParadise' },
-  { value: 'ANIMEHEAVEN', label: '🇺🇸 AnimeHeaven' },
-  { value: 'GOGOANIME', label: '🇺🇸 Gogoanime' },
   { value: 'MAZE', label: '🇺🇸 Maze' },
   { value: 'PAHE', label: '🇺🇸 Pahe' },
+  { value: 'ANIMEPARADISE', label: '🇺🇸 AnimeParadise' },
+  { value: 'ANIMEHEAVEN', label: '🇺🇸 AnimeHeaven' },
+  { value: 'HIANIME', label: '🌍 HiAnime' },
+  { value: 'GOGOANIME', label: '🇺🇸 Gogoanime' },
 ];
 
 const Element: React.FC<{

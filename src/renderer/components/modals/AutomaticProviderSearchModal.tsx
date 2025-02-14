@@ -148,11 +148,10 @@ const AutomaticProviderSearchModal: React.FC<{
             className="automatic-provider-search-content"
             onKeyDown={handleInputKeydown}
           >
-            <span style={{marginBottom: 5}}>
+            <span style={{ marginBottom: 5 }}>
               Auto-matches AniList titles to provider titles.
               <br />
-              If incorrect or
-              missing, use the search bar.
+              If incorrect or missing, use the search bar.
             </span>
 
             <div className="search-container">
