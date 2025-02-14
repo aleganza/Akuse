@@ -62,7 +62,6 @@
   border-radius: var(--border-radius);
   transition: 0.1s ease-out;
   will-change: transform;
-  margin-bottom: 10px;
 }
 
 .modal-page-wrapper .automatic-provider-search-content .search-container input:focus {

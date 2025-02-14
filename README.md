@@ -50,8 +50,8 @@ The languages where both the sub and dub don't work are implemented in the app, 
 | 🇮🇹 AnimeUnity    | Italian             | ✅  | ✅  | Italian recommended                                        |
 | 🇺🇸 Maze          | English             | ✅  | ✅  | Great alternative                                          |
 | 🇺🇸 Pahe          | English             | ✅  | ✅  | Great alternative                                          |
-| 🇺🇸 AnimeParadise | English             | ✅  | ❌  | Works for many anime                                       |
-| 🇺🇸 AnimeHeaven   | English             | ✅  | ❌  | Works for some anime                                       |
+| 🇺🇸 AnimeParadise | English + some more | ✅  | ❌  | Works for some anime, not always up-to-date                |
+| 🇺🇸 AnimeHeaven   | English             | ✅  | ❌  | Works for some anime, not always up-to-date                |
 | 🌍 HiAnime       | English + many more | ✅  | ❌  | Unreliable, slow, doesn't always provide all the languages |
 | 🇺🇸 Gogoanime     | English             | ❌  | ❌  | Broken                                                     |
 

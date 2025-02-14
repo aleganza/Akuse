@@ -21,7 +21,7 @@ interface SelectProps {
   selectedIndex?: number;
 }
 
-const Select: React.FC<SelectProps> = ({
+export const Select: React.FC<SelectProps> = ({
   options,
   selectedValue,
   onChange,

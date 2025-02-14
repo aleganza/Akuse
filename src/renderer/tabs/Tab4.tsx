@@ -91,7 +91,7 @@ const TextInputElement: React.FC<{
   );
 };
 
-const SelectElement: React.FC<{
+export const SelectElement: React.FC<{
   label: string;
   value: number | string;
   options: Option[];

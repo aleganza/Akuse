@@ -12,12 +12,13 @@ import {
   searchInProvider as searchInProviderApi,
 } from '../../../modules/providers/api';
 import { ListAnimeData } from '../../../types/anilistAPITypes';
-import { LANGUAGE_OPTIONS, Provider } from '../../tabs/Tab4';
+import { LANGUAGE_OPTIONS, Provider, SelectElement } from '../../tabs/Tab4';
 import { ModalPage, ModalPageShadow, ModalPageSizeableContent } from './Modal';
 import {
   getProviderSearchMatch,
   setProviderSearchMatch,
 } from '../../../modules/storeVariables';
+import Select from '../Select';
 
 const modalsRoot = document.getElementById('modals-root');
 const STORE = new Store();
@@ -37,6 +38,15 @@ const AutomaticProviderSearchModal: React.FC<{
   const [loading, setLoading] = useState<boolean>(false);
   const [results, setResults] = useState<any[]>([]);
   const [selectedTitle, setSelectedTitle] = useState('');
+  const [feedbackText, setFeedbackText] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(provider);
+
+  const handleLanguageChange = (value: any) => {
+    STORE.set('source_flag', value);
+    setSelectedLanguage(value);
+    setResults([]);
+    startAutomaticMatch(value);
+  };
 
   const handlePlayClick = (providerResult: any) => {
     rememberChoice(providerResult);
@@ -72,12 +82,14 @@ const AutomaticProviderSearchModal: React.FC<{
     if (event.code === 'Enter' && !loading) searchInProvider();
   };
 
-  const startAutomaticMatch = async () => {
+  const startAutomaticMatch = async (staticProvider?: any) => {
     const cachedResult = getProviderSearchMatch(
       listAnimeData!.media.id!,
-      provider,
+      staticProvider ?? provider,
       dubbed,
     );
+    console.log(staticProvider);
+    console.log(provider);
     if (cachedResult !== null) {
       setResults([cachedResult]);
       return;
@@ -93,6 +105,10 @@ const AutomaticProviderSearchModal: React.FC<{
     providerResult && setResults([providerResult]);
 
     setLoading(false);
+    if (!providerResult)
+      setFeedbackText(
+        'Automatic title matching failed. Please try searching manually.',
+      );
   };
 
   const searchInProvider = async () => {
@@ -103,6 +119,8 @@ const AutomaticProviderSearchModal: React.FC<{
     providerResults && setResults(providerResults);
 
     setLoading(false);
+    if (!providerResults || providerResults.length === 0)
+      setFeedbackText('No results found.');
   };
 
   // modal is opened
@@ -126,75 +144,94 @@ const AutomaticProviderSearchModal: React.FC<{
           closeModal={closeModal}
           title="Select source"
         >
-          {loading ? (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                width: '100%',
-              }}
-            >
-              <Dots />
+          <div
+            className="automatic-provider-search-content"
+            onKeyDown={handleInputKeydown}
+          >
+            <span style={{marginBottom: 5}}>
+              Auto-matches AniList titles to provider titles.
+              <br />
+              If incorrect or
+              missing, use the search bar.
+            </span>
+
+            <div className="search-container">
+              <input
+                type="text"
+                id="search-page-filter-title"
+                placeholder="Search manually by title..."
+                value={selectedTitle}
+                onChange={(event: any) => setSelectedTitle(event.target.value)}
+              />
+
+              <button onClick={searchInProvider}>
+                <FontAwesomeIcon className="i" icon={faSearch} />
+              </button>
             </div>
-          ) : (
-            <div
-              className="automatic-provider-search-content"
-              onKeyDown={handleInputKeydown}
-            >
-              <div className="search-container">
-                <input
-                  type="text"
-                  id="search-page-filter-title"
-                  placeholder="Search manually by title..."
-                  value={selectedTitle}
-                  onChange={(event: any) =>
-                    setSelectedTitle(event.target.value)
-                  }
-                />
 
-                <button onClick={searchInProvider}>
-                  <FontAwesomeIcon className="i" icon={faSearch} />
-                </button>
+            <Select
+              zIndex={1000}
+              options={LANGUAGE_OPTIONS}
+              selectedValue={selectedLanguage}
+              onChange={handleLanguageChange}
+              width={180}
+            />
+
+            {results.length === 0 && !loading && (
+              <span style={{ marginTop: 20 }}>{feedbackText}</span>
+            )}
+
+            {/* {results.length !== 0 ? (
+              <span>
+                {`Results from ${
+                  LANGUAGE_OPTIONS.find((l) => l.value == provider)?.label
+                }`}
+              </span>
+            ) : (
+              <span>No matching results. Please try searching again.</span>
+            )} */}
+
+            {loading ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '100%',
+                }}
+              >
+                <Dots />
               </div>
-
-              {results.length !== 0 ? (
-                <span>
-                  {`Results from ${
-                    LANGUAGE_OPTIONS.find((l) => l.value == provider)?.label
-                  }`}
-                </span>
-              ) : (
-                <span>No matching results. Please try searching again.</span>
-              )}
-
-              <div className="cards-group">
-                {results.length !== 0 &&
-                  results?.map((result, index) => (
-                    <div
-                      key={index}
-                      className="card"
-                      onClick={() => {
-                        handlePlayClick(result);
-                      }}
-                    >
-                      {result?.image && (
-                        <img src={result?.image} alt="anime image" />
-                      )}
-                      <div className="right">
-                        <p>
-                          <strong>Title: </strong>
-                          {result?.title}
-                        </p>
-                        <p>
-                          <strong>Id: </strong>
-                          {result?.id}
-                        </p>
+            ) : (
+              results.length !== 0 && (
+                <div className="cards-group">
+                  {results.length !== 0 &&
+                    results?.map((result, index) => (
+                      <div
+                        key={index}
+                        className="card"
+                        onClick={() => {
+                          handlePlayClick(result);
+                        }}
+                      >
+                        {result?.image && (
+                          <img src={result?.image} alt="anime image" />
+                        )}
+                        <div className="right">
+                          <p>
+                            <strong>Title: </strong>
+                            {result?.title}
+                          </p>
+                          <p>
+                            <strong>Id: </strong>
+                            {result?.id}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
+                    ))}
+                </div>
+              )
+            )}
+          </div>
         </ModalPageSizeableContent>
       </ModalPage>
     </>,
