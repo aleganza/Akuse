@@ -8,17 +8,11 @@
 </p>
 
 <p align="center">
-    <img alt="license" src="https://img.shields.io/github/license/aleganza/akuse"> 
-    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/akuse-app/akuse">
-    <img alt="total-downloads" src="https://img.shields.io/github/downloads/aleganza/akuse/total">
+    <img alt="license" src="https://img.shields.io/github/license/aleganza/akuse?style=for-the-badge&labelColor=1a1d24"> 
+    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/akuse-app/akuse?style=for-the-badge&labelColor=1a1d24">
+    <img alt="total-downloads" src="https://img.shields.io/github/downloads/aleganza/akuse/total?style=for-the-badge&labelColor=1a1d24">
     <a href="https://discord.gg/f3wdnqSNX5">
-        <img alt="Discord" src="https://img.shields.io/discord/1163970236224118796?style=flat&label=discord&logo=discord&color=%235567E3">
-    </a>
-</p>
-
-<p align="center" style="text-decoration: none;">
-    <a href="https://github.com/akuse-app/akuse/releases/latest">
-        <img alt="Made For Windows" src="https://img.shields.io/badge/made_for-Windows-0078D6?style=flat&logo=windows&logoColor=white"><img alt="Made For Linux" src="https://img.shields.io/badge/made_for-Linux-FCC624?style=flat&logo=linux&logoColor=white">
+        <img alt="Discord" src="https://img.shields.io/discord/1163970236224118796?style=for-the-badge&labelColor=1a1d24&label=discord&logo=discord&color=%235567E3">
     </a>
 </p>
 
